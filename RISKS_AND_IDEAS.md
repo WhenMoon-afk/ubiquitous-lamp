@@ -144,6 +144,70 @@ This is a living log of:
 
 ---
 
+### R9: Requirements Over-Specification
+**Risk**: Phase B requirements may be too detailed/prescriptive, constraining implementation flexibility
+**Impact**: Medium – Could lead to over-engineering or reluctance to adjust during development
+**Likelihood**: Low-Medium – Detailed requirements are helpful but can become rigid
+
+**Mitigation**:
+- Treat requirements as guidelines, not immutable contracts
+- Focus on "what" (outcomes) rather than "how" (implementation details)
+- Requirements document should be updated during implementation if better approaches emerge
+- Use Socratic review to identify overly prescriptive requirements
+- Phase C (Architecture) has flexibility to adjust technical approach
+
+**Status**: Monitored; requirements written to be testable but not overly constraining
+
+---
+
+### R10: Auto-Run Performance and UX Issues
+**Risk**: Auto-run mode could cause UI sluggishness, battery drain, or unexpected behavior
+**Impact**: Medium – Poor auto-run experience could frustrate users
+**Likelihood**: Medium – Common issue in reactive UIs
+
+**Mitigation**:
+- Implement proper debouncing (500ms delay after last change)
+- Only enable auto-run for inputs <1MB (configurable limit)
+- Provide clear UI indication when auto-run is active
+- Allow users to easily toggle auto-run on/off
+- Consider making auto-run opt-in rather than default
+- Test thoroughly with various input sizes in Phase G/H
+
+**Status**: Documented in requirements (FR4.2); will validate in Phase G
+
+---
+
+### R11: Operation Parameter Validation Complexity
+**Risk**: Each operation needs parameter schemas, validation, and UI generation—significant effort
+**Impact**: Medium – Could slow down operation development
+**Likelihood**: Medium – Parameter system is core to good UX
+
+**Mitigation**:
+- Start with simple parameter types (text, dropdown, number, boolean) in MVP
+- Use JSON Schema or similar for parameter definition (well-understood standard)
+- Build reusable parameter validation and UI widgets in Phase D/E
+- Defer complex parameter types (file pickers, color pickers, etc.) to post-MVP
+- Many MVP operations have zero or few parameters (Base64 decode, SHA-256, etc.)
+
+**Status**: Acknowledged in Phase B requirements; will design solution in Phase C
+
+---
+
+### R12: Input Format Auto-Detection Complexity
+**Risk**: Users may expect smart format detection (e.g., "This looks like Base64"), which is complex to implement
+**Impact**: Low – Nice-to-have feature, not essential for MVP
+**Likelihood**: Low – Not in MVP scope, but users might request it
+
+**Mitigation**:
+- Explicitly defer to post-MVP (document as "Future Idea")
+- Focus MVP on explicit, user-driven recipe building
+- Auto-detection can be added later as UX enhancement
+- Could be implemented as an optional "suggest operations" feature
+
+**Status**: Captured as idea (I18); deferred to post-MVP
+
+---
+
 ## Ideas and Future Enhancements
 
 ### I1: Recipe Library with Tags and Search
@@ -381,6 +445,100 @@ Use GPU for cryptographic operations:
 
 ---
 
+### I16: Recipe Templates Based on User Stories
+**Category**: UX Enhancement / Recipe Management
+**Phase**: Post-MVP (Phase K - Recipe Management)
+
+Provide built-in recipe templates for common workflows identified in user stories:
+- "Decode suspicious email attachment" (Base64 → JSON Pretty Print)
+- "Hash file for threat intel" (SHA-256)
+- "Decode web logs" (URL Decode → JSON Pretty Print)
+- "Analyze multi-encoded data" (Base64 → Hex Decode → URL Decode)
+- Templates could include descriptions of when to use them
+
+**Complexity**: Low – Just pre-defined recipe JSON files
+**Value**: High for beginners, medium for power users
+**Note**: Could be community-contributed recipes in a GitHub repository
+
+---
+
+### I17: Operation Preview and Examples in UI
+**Category**: Documentation / UX
+**Phase**: Post-MVP (Phase H or later)
+
+Show contextual help for each operation:
+- When hovering over or selecting an operation, show:
+  - Brief description
+  - Example input → output
+  - Common use cases
+  - Parameter explanations
+- Could be sidebar panel or tooltip
+- Examples could be embedded in operation metadata
+
+**Complexity**: Medium – Requires help content authoring and UI space
+**Value**: High – Reduces learning curve significantly
+**Note**: Similar to CyberChef's operation descriptions
+
+---
+
+### I18: Input Format Auto-Detection
+**Category**: Smart Features / UX
+**Phase**: Post-MVP
+
+Analyze input and suggest likely operations:
+- "This looks like Base64-encoded data. Add Base64 Decode?"
+- "This appears to be JSON. Add JSON Pretty Print?"
+- "This looks like a hex string. Add Hex Decode?"
+- Detection could use heuristics (character sets, patterns)
+- Non-intrusive suggestions (banner or button, not modal)
+
+**Complexity**: Medium – Each format needs detection heuristics
+**Value**: Medium – Helpful for beginners, power users may ignore
+**Risk**: False positives could annoy users
+**Similar To**: DevToys' clipboard format detection
+
+---
+
+### I19: Minimal Vertical Slice Validation
+**Category**: Process / Quality Assurance
+**Phase**: MVP - Phase J (Testing)
+
+Explicitly test the minimal vertical slice identified in requirements:
+- User can paste Base64-encoded JSON
+- Build 2-operation recipe (Base64 Decode → JSON Pretty Print)
+- Execute recipe
+- Copy formatted result
+- **All within 2 minutes on first use**
+
+This is the core "does it work?" test for MVP success.
+
+**Complexity**: Low – Just a structured user test
+**Value**: Very High – Validates core value proposition
+**Note**: Should be first test case in Phase J user testing
+
+---
+
+### I20: Operation Categories and Filtering
+**Category**: UX / Organization
+**Phase**: Post-MVP (when operation catalog grows beyond ~15)
+
+As operation count grows, organize by category:
+- Encoding/Decoding
+- Hashing
+- Cryptography
+- Text Operations
+- Data Formatting
+- Binary Operations
+- Network (if added)
+- Filter/search operations by name or category
+- Keyboard shortcut to open operation search
+
+**Complexity**: Low-Medium – Mostly UI work
+**Value**: High once operation count exceeds ~20
+**Note**: Not needed for MVP with 7-8 operations
+
+---
+
 ## Decisions Log
 
 ### D1: Project Name – "DataForge"
@@ -430,11 +588,16 @@ Use GPU for cryptographic operations:
 
 ## Tracking
 
-- **Total Risks**: 8 identified
+- **Total Risks**: 12 identified
 - **High Impact Risks**: 3 (R1, R2, R3)
-- **Risks Accepted for MVP**: 2 (R3, R5)
-- **Ideas Logged**: 15
+- **Risks Accepted for MVP**: 3 (R3, R5, R9)
+- **Ideas Logged**: 20
 - **Decisions Made**: 5
+
+### Updates in Phase B (Requirements)
+- Added 4 new risks (R9-R12) related to requirements, auto-run, parameters, and auto-detection
+- Added 5 new ideas (I16-I20) related to templates, previews, auto-detection, testing, and organization
+- Refined understanding of MVP scope based on detailed requirements work
 
 ---
 
