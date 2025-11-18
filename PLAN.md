@@ -37,37 +37,69 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase B: Architecture and Technical Design **[MVP]**
+## Phase B: Requirements Extraction **[MVP]**
+
+**Status**: In Progress
+**Goal**: Internalize background context and establish concrete, testable requirements
+
+### Objectives
+- Internalize CyberChef, DevToys/DevUtils, and Chepy background and patterns
+- Extract functional requirements (input/output, operations, recipes, pipeline execution, plugins)
+- Extract non-functional requirements (offline, performance, portability, maintainability, security)
+- Draft user stories for key personas
+- Prioritize requirements (Must/Should/Could) to define MVP scope clearly
+
+### Deliverables
+- `REQUIREMENTS.md` – Complete requirements specification with:
+  - Background summary
+  - Functional requirements (FR1-FR5)
+  - Non-functional requirements (NFR1-NFR5)
+  - User stories for security analysts, developers, power users, plugin authors
+  - Priority classifications and minimal vertical slice definition
+- Updated `PROJECT_OVERVIEW.md`, `PLAN.md`, `RISKS_AND_IDEAS.md`
+- `.claude-phases/phase-b_summary.md` – Phase summary and key decisions
+- `.claude-phases/phase-b_verification.json` – Completion checklist
+
+### Exit Criteria
+- All MVP functional requirements are documented and prioritized
+- Non-functional requirements address offline, performance, portability, maintainability, security
+- User stories cover primary personas and validate MVP scope
+- Minimal vertical slice for MVP is clearly defined
+- Socratic review has challenged requirements and addressed conflicts
+
+---
+
+## Phase C: Architecture and Technical Design **[MVP]**
 
 **Status**: Not Started
 **Goal**: Design the core system architecture and define interfaces
 
 ### Objectives
 - Choose UI framework (PyQt6, Tkinter, or PyWebView)
-- Design pipeline engine architecture
+- Design pipeline engine architecture based on requirements
 - Define plugin API and discovery mechanism
 - Plan data flow between UI, engine, and operations
 - Select packaging approach (PyInstaller, Nuitka, etc.)
 
 ### Deliverables
 - `ARCHITECTURE.md` – System design, component diagram, data flow
-- `docs/plugin-api.md` – Plugin interface specification
+- `docs/plugin-api.md` – Plugin interface specification (initial draft)
 - `docs/technology-decisions.md` – Framework choices with rationale
 - Proof-of-concept: Minimal pipeline engine that can chain 2 operations
 - Proof-of-concept: Load a simple plugin dynamically
 
 ### Exit Criteria
 - Technology choices are made and documented
-- Core architecture supports MVP requirements
+- Core architecture supports requirements from Phase B
 - Plugin model is validated with a working prototype
 - Team agrees on the technical approach
 
 ---
 
-## Phase C: Core Pipeline Engine **[MVP]**
+## Phase D: Core Pipeline Engine **[MVP]**
 
 **Status**: Not Started
-**Goal**: Implement the pipeline execution engine
+**Goal**: Implement the pipeline execution engine based on Phase B requirements
 
 ### Objectives
 - Implement operation execution pipeline
@@ -90,7 +122,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase D: MVP Operations Library **[MVP]**
+## Phase E: MVP Operations Library **[MVP]**
 
 **Status**: Not Started
 **Goal**: Implement the core set of operations for MVP
@@ -123,7 +155,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase E: Plugin System **[MVP]**
+## Phase F: Plugin System **[MVP]**
 
 **Status**: Not Started
 **Goal**: Implement dynamic plugin discovery and loading
@@ -150,7 +182,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase F: Basic UI Implementation **[MVP]**
+## Phase G: Basic UI Implementation **[MVP]**
 
 **Status**: Not Started
 **Goal**: Build the 3-pane desktop UI
@@ -178,7 +210,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase G: Error Handling and UX Polish **[MVP]**
+## Phase H: Error Handling and UX Polish **[MVP]**
 
 **Status**: Not Started
 **Goal**: Ensure robust error handling and basic usability
@@ -206,7 +238,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase H: Packaging and Distribution **[MVP]**
+## Phase I: Packaging and Distribution **[MVP]**
 
 **Status**: Not Started
 **Goal**: Create distributable executables for end users
@@ -233,7 +265,7 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ---
 
-## Phase I: MVP Testing and Refinement **[MVP]**
+## Phase J: MVP Testing and Refinement **[MVP]**
 
 **Status**: Not Started
 **Goal**: Validate MVP with real users and fix critical issues
@@ -262,13 +294,13 @@ This document outlines the phased development approach for DataForge, clearly se
 
 ## Future Phases (Post-MVP) **[STRETCH]**
 
-### Phase J: Recipe Management **[POLISH]**
+### Phase K: Recipe Management **[POLISH]**
 - Save/load recipes to disk
 - Recipe library UI
 - Import/export recipes (JSON format)
 - Preset recipes for common tasks
 
-### Phase K: Advanced Operations **[STRETCH]**
+### Phase L: Advanced Operations **[STRETCH]**
 - Compression/decompression (gzip, zlib)
 - Regular expression operations
 - Binary file operations
@@ -276,32 +308,32 @@ This document outlines the phased development approach for DataForge, clearly se
 - XOR cipher
 - Character encoding conversions
 
-### Phase L: Branching Pipelines **[STRETCH]**
+### Phase M: Branching Pipelines **[STRETCH]**
 - Conditional operations
 - Multiple pipeline branches
 - Merge operations
 - Visual fork/join representation
 
-### Phase M: CLI Mode **[STRETCH]**
+### Phase N: CLI Mode **[STRETCH]**
 - Command-line interface for automation
 - Pipe support (stdin/stdout)
 - Batch processing
 - Recipe execution from command line
 
-### Phase N: Performance Optimization **[STRETCH]**
+### Phase O: Performance Optimization **[STRETCH]**
 - Streaming for large files (>100MB)
 - Chunked processing
 - Multi-threading for parallelizable operations
 - Memory profiling and optimization
 
-### Phase O: Advanced UX **[STRETCH]**
+### Phase P: Advanced UX **[STRETCH]**
 - Operation search and filtering
 - Keyboard shortcut library
 - Theming support (dark/light mode)
 - Drag-and-drop recipe building
 - Operation favorites
 
-### Phase P: Security Hardening **[STRETCH]**
+### Phase Q: Security Hardening **[STRETCH]**
 - Plugin sandboxing
 - Plugin signature verification
 - Security audit of cryptographic operations
@@ -337,20 +369,22 @@ This document outlines the phased development approach for DataForge, clearly se
 ```
 Phase A (Framing)
   ↓
-Phase B (Architecture) → Must complete before C, D, E, F
+Phase B (Requirements) → Must complete before all implementation phases
   ↓
-Phase C (Pipeline Engine) → Must complete before D, E, F
+Phase C (Architecture) → Must complete before D, E, F, G
   ↓
-Phase D (Operations) ──┐
-  ↓                    ├→ Phase G (Error Handling/Polish)
-Phase E (Plugins) ────┤     ↓
-  ↓                    ├→ Phase H (Packaging)
-Phase F (UI) ─────────┘     ↓
-                         Phase I (Testing/Refinement)
+Phase D (Pipeline Engine) → Must complete before E, F, G
+  ↓
+Phase E (Operations) ──┐
+  ↓                    ├→ Phase H (Error Handling/Polish)
+Phase F (Plugins) ────┤     ↓
+  ↓                    ├→ Phase I (Packaging)
+Phase G (UI) ─────────┘     ↓
+                         Phase J (Testing/Refinement)
                              ↓
                          MVP RELEASE
                              ↓
-                    Future Phases (J-P)
+                    Future Phases (K-Q)
 ```
 
 ---
@@ -358,15 +392,16 @@ Phase F (UI) ─────────┘     ↓
 ## Timeline Estimates (Rough)
 
 Assuming focused development:
-- **Phase A**: 1 day (this phase)
-- **Phase B**: 2-3 days
-- **Phase C**: 3-5 days
-- **Phase D**: 3-4 days
-- **Phase E**: 2-3 days
-- **Phase F**: 5-7 days
-- **Phase G**: 2-3 days
-- **Phase H**: 2-3 days
-- **Phase I**: 3-5 days
+- **Phase A**: 1 day (completed - framing)
+- **Phase B**: 1 day (current - requirements)
+- **Phase C**: 2-3 days (architecture and design)
+- **Phase D**: 3-5 days (pipeline engine)
+- **Phase E**: 3-4 days (operations library)
+- **Phase F**: 2-3 days (plugin system)
+- **Phase G**: 5-7 days (UI implementation)
+- **Phase H**: 2-3 days (error handling/polish)
+- **Phase I**: 2-3 days (packaging)
+- **Phase J**: 3-5 days (testing/refinement)
 
 **Total MVP Timeline**: ~4-6 weeks of focused development
 
@@ -374,12 +409,13 @@ Assuming focused development:
 
 ## Risk Mitigation Through Phasing
 
-- **Early architecture decisions (Phase B)** prevent costly refactoring later
-- **Core engine first (Phase C)** validates the technical approach before building UI
-- **Operations independent (Phase D)** can be developed in parallel once engine is ready
-- **Plugin system (Phase E)** proves extensibility before UI complexity
-- **UI comes late (Phase F)** because it's easier to change UI than core engine
-- **Testing as a phase (Phase I)** ensures quality isn't an afterthought
+- **Early requirements definition (Phase B)** establishes clear scope and testable criteria
+- **Early architecture decisions (Phase C)** prevent costly refactoring later
+- **Core engine first (Phase D)** validates the technical approach before building UI
+- **Operations independent (Phase E)** can be developed in parallel once engine is ready
+- **Plugin system (Phase F)** proves extensibility before UI complexity
+- **UI comes late (Phase G)** because it's easier to change UI than core engine
+- **Testing as a phase (Phase J)** ensures quality isn't an afterthought
 
 ---
 

@@ -6,6 +6,10 @@
 ## High-Level Goal
 Build a desktop application that provides security analysts, developers, and power users with a local, privacy-respecting alternative to CyberChef. DataForge enables chaining data transformation operations in a simple linear pipeline, running entirely offline on the user's machine.
 
+DataForge synthesizes the strengths of three tool categories: CyberChef's composable pipeline model, DevToys/DevUtils' native desktop UX, and Chepy's plugin extensibility—all in a local-first architecture prioritizing privacy, offline capability, and maintainability.
+
+**See [REQUIREMENTS.md](REQUIREMENTS.md) for detailed functional and non-functional requirements.**
+
 ## Target Users
 - **Security Analysts & Incident Responders**: Need to decode, decode, hash, and transform data during investigations without sending sensitive information to external services
 - **Developers**: Require quick access to common encoding/decoding operations during development and debugging
@@ -27,10 +31,13 @@ Build a desktop application that provides security analysts, developers, and pow
 
 ### 3. Core Operations Catalog (MVP)
 Essential transformations that cover common use cases:
-- **Encoding/Decoding**: Base64, Hex, URL encoding
+- **Encoding/Decoding**: Base64 encode/decode, Hex encode/decode, URL encode/decode
 - **Data Formatting**: JSON pretty-print, JSON minify
-- **Hashing**: SHA-256 (with room to add MD5, SHA-1, SHA-512, etc.)
-- **Text Operations**: To/from uppercase/lowercase, trim whitespace
+- **Hashing**: SHA-256 (MD5 and SHA-1 as SHOULD-have with security warnings)
+
+**Minimal Vertical Slice:** Base64 Decode + JSON Pretty Print + SHA-256 Hash prove the core pipeline concept.
+
+See [REQUIREMENTS.md](REQUIREMENTS.md) Section FR3 for complete operation specifications.
 
 ### 4. Plugin-Style Extension Model
 - New operations can be added by dropping files into a `plugins/` directory
